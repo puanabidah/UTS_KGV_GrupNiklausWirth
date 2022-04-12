@@ -7,6 +7,7 @@
 #include <math.h>
 #include "Util.h"
 
+// Warna default
 float color1[] = { 1.0f, 0.0f, 0.0f, 1.0f }; 
 float color2[] = { 1.0f, 1.0f, 1.0f, 1.0f };  
 float color3[] = { 0.4f, 0.2f, 0.1f, 1.0f };
@@ -17,8 +18,8 @@ float color7[] = { 0.0f, 1.0f, 0.0f, 1.0f };
 float color8[] = { 1.0f, 1.0f, 0.0f, 1.0f }; 
 
 unsigned int program;
-GLint color1Loc, color2Loc, color3Loc, color4Loc, color5Loc, color6Loc, color7Loc, color8Loc, titik1Loc, titik2Loc, scaleLoc;
-float xp, yp, r = 1, n = 8, x, y, a = 0.5f, z = 0.0f, increment = 0.05f;
+GLint color1Loc, color2Loc, color3Loc, color4Loc, color5Loc, color6Loc, color7Loc, color8Loc, dot1Loc, dot2Loc, scaleLoc;
+float xpusat, ypusat, r = 1, phi = 3.14, n_sisi = 8, x, y, z = 0.0f, s = 0.5f, inc = 0.05f;
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -49,15 +50,15 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
     // Memperbesar skala
     else if (key == GLFW_KEY_B && action == GLFW_PRESS)
     {
-        a += 0.1f; // a = a + 0.1f
-        glUniform1f(scaleLoc, a);
+        s = s + 0.1f;
+        glUniform1f(scaleLoc, s);
     }
 
     // Memperkecil skala
     else if (key == GLFW_KEY_K && action == GLFW_PRESS)
     {
-        a -= 0.1f;
-        glUniform1f(scaleLoc, a);
+        s = s - 0.1f;
+        glUniform1f(scaleLoc, s);
     }
 }
 
@@ -91,19 +92,18 @@ int main(void)
     float vertices[18] = { };
 
     // Menghitung nilai x dan y menggunakan rumus berikut
-    int index = 0;
-    a = (2 * 3.14) / n; 
-    for (int i = 0; i < n; i++) 
+    int index = 0; 
+    for (int i = 0; i < n_sisi; i++)
     {
-        x = xp + r * cos(i * a);
-        y = yp + r * sin(i * a);
+        x = xpusat + r * cos(2 * phi * i / n_sisi);
+        y = ypusat + r * sin(2 * phi * i / n_sisi);
         vertices[index] = x;
         index = index + 1;
         vertices[index] = y;
         index = index + 1;
     }
-    vertices[16] = xp;
-    vertices[17] = yp;
+    vertices[16] = xpusat;
+    vertices[17] = ypusat;
 
     // Menyimpan data ke index buffer
     unsigned int indexArr[] = {
@@ -117,13 +117,13 @@ int main(void)
         7, 0, 8
     };
 
-    /* untuk vertex buffer */
+    /* untuk pengiriman data ke GPU menggunakan vertex buffer */
     unsigned int vertexBuffer = 0;
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 18, vertices, GL_STATIC_DRAW);
 
-    /* untuk index buffer */
+    /* untuk pengiriman data ke GPU menggunakan index buffer */
     unsigned int indexBuffer = 0;
     glGenBuffers(1, &indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
@@ -163,12 +163,12 @@ int main(void)
     glUniform1f(scaleLoc, 0.5f);
 
     //membuat titik 1
-    titik1Loc = glGetUniformLocation(program, "titik1");
-    glUniform1f(titik1Loc, indexArr[0]);
+    dot1Loc = glGetUniformLocation(program, "titik1");
+    glUniform1f(dot1Loc, indexArr[0]);
 
     //membuat titik 2
-    titik2Loc = glGetUniformLocation(program, "titik2");
-    glUniform1f(titik2Loc, indexArr[1]);
+    dot2Loc = glGetUniformLocation(program, "titik2");
+    glUniform1f(dot2Loc, indexArr[1]);
 
     color1Loc = glGetUniformLocation(program, "color1");
     glUniform4f(color1Loc, color1[0], color1[1], color1[2], color1[3]);
@@ -212,11 +212,9 @@ int main(void)
         glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, nullptr);
         
         // untuk perhitungan animasi perubahan warna
-        if (z > 1.0f)
-            increment = -0.005f;
-        else if (z < 0.0f)
-            increment = 0.005f;
-        z += increment;
+        if (z > 1.0f) inc = -0.005f; 
+        else if (z < 0.0f) inc = 0.005f;
+        z = z + inc;
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

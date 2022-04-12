@@ -1,8 +1,5 @@
 ﻿  UTS_KGV_GrupNiklausWirth.cpp
-D:\Programming\Graphic Computer & Visual\UTS_KGV_GrupNiklausWirth\UTS_KGV_GrupNiklausWirth.cpp(95,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Programming\Graphic Computer & Visual\UTS_KGV_GrupNiklausWirth\UTS_KGV_GrupNiklausWirth.cpp(167,38): warning C4244: 'argument': conversion from 'unsigned int' to 'GLfloat', possible loss of data
-D:\Programming\Graphic Computer & Visual\UTS_KGV_GrupNiklausWirth\UTS_KGV_GrupNiklausWirth.cpp(171,38): warning C4244: 'argument': conversion from 'unsigned int' to 'GLfloat', possible loss of data
-glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'D:\Programming\Graphic Computer & Visual\UTS_KGV_GrupNiklausWirth\x64\Debug\vc120.pdb'; linking object as if no debug info
-LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+D:\Programming\Graphic Computer & Visual\UTS_KGV_GrupNiklausWirth\UTS_KGV_GrupNiklausWirth.cpp(22,40): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\Programming\Graphic Computer & Visual\UTS_KGV_GrupNiklausWirth\UTS_KGV_GrupNiklausWirth.cpp(167,36): warning C4244: 'argument': conversion from 'unsigned int' to 'GLfloat', possible loss of data
+D:\Programming\Graphic Computer & Visual\UTS_KGV_GrupNiklausWirth\UTS_KGV_GrupNiklausWirth.cpp(171,36): warning C4244: 'argument': conversion from 'unsigned int' to 'GLfloat', possible loss of data
   UTS_KGV_GrupNiklausWirth.vcxproj -> D:\Programming\Graphic Computer & Visual\UTS_KGV_GrupNiklausWirth\x64\Debug\UTS_KGV_GrupNiklausWirth.exe
